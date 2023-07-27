@@ -174,7 +174,7 @@ function confirmCustomerPyament(body: any, userId: any): Promise<any> {
         try {
             const { paymentId } = body
             const todayDate = moment(new Date()).add(0, 'days').format('YYYY-MM-DD')
-            const userData: any = await userModel.findOne({ _id: userId, isDelete: false })
+            const userData: any = await userModel.find({})
             if (!userData) {
                 reject(new CustomError(errors.en.noSuchAccountExist, StatusCodes.UNAUTHORIZED))
             } else {
@@ -185,8 +185,8 @@ function confirmCustomerPyament(body: any, userId: any): Promise<any> {
                 //     payment_method_types: ['card'],
                 //     payment_method: cardAttachedID, // The ID of the source attached to the customer
                 // });
-                const confirmedPaymentIntent = await stripe.paymentIntents.confirm(paymentId);
-                resolve(confirmedPaymentIntent);
+               // const confirmedPaymentIntent = await stripe.paymentIntents.confirm(paymentId);
+                resolve(userData);
             }
         } catch (err) {
             reject(err)
